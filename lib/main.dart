@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/pages/home/home.dart';
+import 'package:flutter_pokedex/routes.dart';
 
 void main() {
   runApp(const PokedexApp());
@@ -32,7 +34,22 @@ class PokedexApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      navigatorKey: AppNavigator.navigatorKey,
+      onGenerateRoute: AppNavigator.onGenerateRoute,
+      builder: (context, child) {
+            if (child == null) return const SizedBox.shrink();
+
+            final data = MediaQuery.of(context);
+            final smallestSize = min(data.size.width, data.size.height);
+            final textScaleFactor = min(smallestSize / 375, 1.0);
+
+            return MediaQuery(
+              data: data.copyWith(
+                textScaler: TextScaler.linear(textScaleFactor),
+              ),
+              child: child,
+            );
+          },
     );
   }
 }
