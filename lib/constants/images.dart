@@ -8,8 +8,12 @@ class _Image extends AssetImage {
 
 class AppImages {
   static const pikachuLoader = _Image('pikachu_loader.gif');
+  static const pokeball = _Image('pokeball.png');
+  static const pokemonCardThumbnail = _Image('pokemon_card_thumbnail.png');
 
   static Future precacheAssets(BuildContext context) async {
     await precacheImage(pikachuLoader, context);
+    await precacheImage(pokeball, context);
+    await precacheImage(pokemonCardThumbnail, context);
   }
 }
