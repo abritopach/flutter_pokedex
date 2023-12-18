@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/constants/colors.dart';
 import 'package:flutter_pokedex/constants/images.dart';
+import 'package:flutter_pokedex/domain/entities/category.dart';
+import 'package:flutter_pokedex/routes.dart';
+import 'package:flutter_pokedex/ui/pages/home/widgets/category_card.dart';
 import 'package:flutter_pokedex/ui/pages/home/widgets/news_card.dart';
 import 'package:flutter_pokedex/ui/widgets/pokeball_background.dart';
 
