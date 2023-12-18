@@ -48,6 +48,7 @@ class _HeaderCard extends StatelessWidget {
               ),
             ),
             _buildTitle(),
+            _buildSearchBar(),
             _buildCategories(context),
           ],
         ),
@@ -94,4 +95,22 @@ class _HeaderCard extends StatelessWidget {
     );
   }
 
+}
+
+Widget _buildSearchBar() {
+  return const
+    Padding(
+      padding: EdgeInsets.only(left: 28.0, right: 28.0),
+      child: Column(
+        children: [
+          SearchBar(
+            padding: MaterialStatePropertyAll<EdgeInsets>(
+                EdgeInsets.symmetric(horizontal: 18, vertical: 8)),
+            leading: Icon(Icons.search),
+            hintText: 'Search Pokemon, Move, Ability etc',
+            backgroundColor: MaterialStatePropertyAll(Colors.white)
+          )
+        ]
+      )
+    );
 }
