@@ -1,7 +1,20 @@
 part of '../home.dart';
 
+const List<Category> categories = [
+  Category(name: 'Pokedex', color: AppColors.teal, route: Routes.pokedex),
+  Category(name: 'Moves', color: AppColors.red, route: Routes.pokedex),
+  Category(name: 'Abilities', color: AppColors.blue, route: Routes.pokedex),
+  Category(name: 'Items', color: AppColors.yellow, route: Routes.items),
+  Category(name: 'Locations', color: AppColors.purple, route: Routes.pokedex),
+  Category(name: 'Type Effects', color: AppColors.brown, route: Routes.typeEffects),
+];
+
 class _HeaderCard extends StatelessWidget {
   static const double height = 582;
+
+  void _onSelectCategory(Category category) {
+    AppNavigator.push(category.route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,8 @@ class _HeaderCard extends StatelessWidget {
                     )),
               ),
             ),
-            _buildTitle()
+            _buildTitle(),
+            _buildCategories(context),
           ],
         ),
       ),
@@ -56,6 +70,27 @@ class _HeaderCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCategories(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.fromLTRB(28, 42, 28, 62),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        childAspectRatio: 2.6,
+        mainAxisSpacing: 15,
+      ),
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        return CategoryCard(
+          categories[index],
+          onPress: () => _onSelectCategory(categories[index]),
+        );
+      },
     );
   }
 
