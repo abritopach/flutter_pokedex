@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
           children: <Widget>[
             Align(
               alignment: Alignment.bottomCenter,
-              child: _Shadows(color: category.color, width: itemWidth * 0.82),
+              child: _Shadows(color: category.color, width: itemWidth),
             ),
             Material(
               color: category.color,
@@ -33,6 +33,8 @@ class CategoryCard extends StatelessWidget {
                 splashColor: Colors.white10,
                 highlightColor: Colors.white10,
                 onTap: onPress,
+                onTapDown: (_) => print("onTapDown"),
+                onTapUp: (_) => print("onTapUp"),
                 child: Stack(
                   children: [
                     _buildPokeballDecoration(height: itemHeight),
@@ -104,14 +106,14 @@ class _Shadows extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width * 0.82,
+      width: width * 0.95,
       height: 11,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: color,
             offset: const Offset(0, 3),
-            blurRadius: 23,
+            blurRadius: 13,
           ),
         ],
       ),
