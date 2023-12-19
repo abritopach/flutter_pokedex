@@ -9,8 +9,18 @@ const List<Category> categories = [
   Category(name: 'Type Effects', color: AppColors.brown, route: Routes.typeEffects),
 ];
 
-class _HeaderCard extends StatelessWidget {
+class HeaderCard extends StatefulWidget {
+
+  const HeaderCard({super.key});
   static const double height = 582;
+
+  @override
+  State<StatefulWidget> createState() => _HeaderCardState();
+
+}
+
+
+class _HeaderCardState extends State<HeaderCard> {
 
   void _onSelectCategory(Category category) {
     AppNavigator.push(category.route);
@@ -98,19 +108,39 @@ class _HeaderCard extends StatelessWidget {
 }
 
 Widget _buildSearchBar() {
-  return const
+  return
     Padding(
-      padding: EdgeInsets.only(left: 28.0, right: 28.0),
-      child: Column(
-        children: [
-          SearchBar(
-            padding: MaterialStatePropertyAll<EdgeInsets>(
-                EdgeInsets.symmetric(horizontal: 18, vertical: 8)),
-            leading: Icon(Icons.search),
-            hintText: 'Search Pokemon, Move, Ability etc',
-            backgroundColor: MaterialStatePropertyAll(Colors.white)
-          )
-        ]
-      )
+      padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+        child: Column(
+          children: [
+            SearchAnchor(
+              builder: (BuildContext context, SearchController controller) {
+                return SearchBar(
+                  controller: controller,
+                  padding: const MaterialStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 18, vertical: 8)),
+                  leading: const Icon(Icons.search),
+                  hintText: 'Search Pokemon, Move, Ability etc',
+                  onTap: () {
+                    controller.openView();
+                  },
+                  onChanged: (_) {
+                    controller.openView();
+                  }
+                );
+              }, suggestionsBuilder: (BuildContext context, SearchController controller) {
+                  return List<ListTile>.generate(5, (int index) {
+                    final String item = 'item $index';
+                    return ListTile(
+                      title: Text(item),
+                      onTap: () {
+                        controller.closeView(item);
+                      },
+                    );
+                  });
+              }
+            )
+          ]
+        )
     );
 }
