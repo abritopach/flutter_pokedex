@@ -25,15 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
       return Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (_, __) => [
-            SliverAppBar(
-              expandedHeight: _HeaderCard.height,
+            const SliverAppBar(
+              expandedHeight: HeaderCard.height,
               floating: true,
               pinned: true,
               elevation: 0,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 centerTitle: true,
-                background: _HeaderCard(),
+                background: HeaderCard(),
               ),
             ),
           ],
