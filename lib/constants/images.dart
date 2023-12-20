@@ -10,10 +10,12 @@ class AppImages {
   static const pikachuLoader = _Image('pikachu_loader.gif');
   static const pokeball = _Image('pokeball.png');
   static const pokemonCardThumbnail = _Image('pokemon_card_thumbnail.png');
+  static const bulbasaur = _Image('bulbasaur.png');
 
   static Future precacheAssets(BuildContext context) async {
     await precacheImage(pikachuLoader, context);
     await precacheImage(pokeball, context);
     await precacheImage(pokemonCardThumbnail, context);
+    await precacheImage(bulbasaur, context);
   }
 }
