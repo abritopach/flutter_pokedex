@@ -2,9 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/routes.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const PokedexApp());
+  runApp(
+    const ProviderScope(child: PokedexApp())
+    );
 }
 
 class PokedexApp extends StatelessWidget {
