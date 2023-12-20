@@ -28,13 +28,13 @@ class PokemonImage extends StatelessWidget {
     return HeroMode(
       enabled: useHero,
       child: Hero(
-        tag: pokemon.image,
+        tag: "tag", // pokemon.image,
         child: AnimatedPadding(
           duration: const Duration(milliseconds: 600),
           curve: Curves.easeOutQuint,
           padding: padding,
           child: CachedNetworkImage(
-            imageUrl: pokemon.image,
+            imageUrl: "url", //pokemon.image,
             useOldImageOnUrlChange: true,
             maxWidthDiskCache: _cacheMaxSize.width.toInt(),
             maxHeightDiskCache: _cacheMaxSize.height.toInt(),

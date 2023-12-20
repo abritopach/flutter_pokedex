@@ -1,13 +1,13 @@
 part of '../pokedex.dart';
 
-class _PokemonGrid extends StatefulWidget {
+class _PokemonGrid extends ConsumerStatefulWidget {
   const _PokemonGrid();
 
   @override
-  _PokemonGridState createState() => _PokemonGridState();
+  ConsumerState createState() => _PokemonGridState();
 }
 
-class _PokemonGridState extends State<_PokemonGrid> {
+class _PokemonGridState extends ConsumerState {
 
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
@@ -21,6 +21,9 @@ class _PokemonGridState extends State<_PokemonGrid> {
   static const title = 'Pokedex';
   @override
   Widget build(BuildContext context) {
+
+    final AsyncValue<List<Pokemon>> pokemons = ref.watch(getPokemonsProvider);
+
     return NestedScrollView(
       key: _scrollKey,
       headerSliverBuilder: (_, __) => [
@@ -66,19 +69,63 @@ class _PokemonGridState extends State<_PokemonGrid> {
             ),
           ),
       ],
-      body: const Center(
-        child: Text('Pokemons'),
+      body: Center(
+        child: pokemons.when(
+        data: (data) => ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              title: Text(data[index].name),
+                            );
+                          },
+        ),
+        error: (e, s) =>
+        const Center(
+          child: Text('Uh oh. Something went wrong!'),
+        ),
+        loading: () => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
       ),
     );
   }
 
+/*
   Widget _buildGrid() {
     return CustomScrollView(
       slivers: [
         SliverPadding(
-          padding: const EdgeInsets.all(28)
-        )
+          padding: const EdgeInsets.all(28),
+          sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (_, index) {
+                  PokemonCard(
+                      pokemon,
+                      onPress: () => _onPokemonPress(pokemon),
+                  );
+                  });
+                },
+                childCount: numberOfPokemons,
+              ),
+            );
+          }),
+        ),
+        SliverToBoxAdapter(
+          child: Container(
+              padding: const EdgeInsets.only(bottom: 28),
+              alignment: Alignment.center,
+              child: const Image(image: AppImages.pikachuLoader),
+          )
+        ),
       ],
     );
   }
+  */
 }

@@ -1,56 +1,28 @@
-import 'package:flutter/material.dart';
 
-import 'pokemon_props.dart';
-import 'pokemon_types.dart';
+import 'dart:ffi';
 
-class Pokemon {
-  const Pokemon({
-    required this.number,
-    required this.name,
-    required this.description,
-    required this.types,
-    required this.image,
-    required this.height,
-    required this.weight,
-    required this.genera,
-    required this.eggGroups,
-    required this.gender,
-    required this.stats,
-    required this.baseExp,
-    required this.evolutions,
-    required this.evolutionReason,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final String number;
-  final String name;
-  final String description;
-  final List<PokemonTypes> types;
-  final String image;
-  final String height;
-  final String weight;
-  final String genera;
-  final List<String> eggGroups;
-  final PokemonGender gender;
-  final PokemonStats stats;
-  final double baseExp;
-  final List<Pokemon> evolutions;
-  final String evolutionReason;
+part 'pokemon.freezed.dart';
+part 'pokemon.g.dart';
+
+/// The response of the `GET /api/activity` endpoint.
+///
+/// It is defined using `freezed` and `json_serializable`.
+@freezed
+class Pokemon with _$Pokemon {
+  factory Pokemon({
+    required double height,
+    required bool is_default,
+    required String location_area_encounters,
+    required String name,
+    required int id,
+    required double weight,
+  }) = _Pokemon;
+
+  /// Convert a JSON object into an [Activity] instance.
+  /// This enables type-safe reading of the API response.
+  factory Pokemon.fromJson(Map<String, dynamic> json) =>
+      _$PokemonFromJson(json);
 }
 
-extension PokemonX on Pokemon {
-  Color get color => types.first.color;
-
-  Map<PokemonTypes, double> get typeEffectiveness {
-    final effectiveness =
-        PokemonTypes.values.where((element) => element != PokemonTypes.unknown).map(
-              (type) => MapEntry(
-                type,
-                types
-                    .map((pokemonType) => pokemonType.effectiveness[type] ?? 1.0)
-                    .reduce((total, effectiveness) => total * effectiveness),
-              ),
-            );
-
-    return Map.fromEntries(effectiveness);
-  }
-}
