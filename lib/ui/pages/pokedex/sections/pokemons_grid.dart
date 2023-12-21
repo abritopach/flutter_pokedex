@@ -9,6 +9,8 @@ class _PokemonGrid extends ConsumerStatefulWidget {
 
 class _PokemonGridState extends ConsumerState {
 
+  static const double _endReachedThreshold = 200;
+
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
   static const TextStyle _textStyle = TextStyle(
@@ -19,6 +21,43 @@ class _PokemonGridState extends ConsumerState {
   );
 
   static const title = 'Pokedex';
+
+  @override
+  void initState() {
+    super.initState();
+    scheduleMicrotask(() {
+      _scrollKey.currentState?.innerController.addListener(_onScroll);
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollKey.currentState?.innerController.dispose();
+    _scrollKey.currentState?.dispose();
+
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final innerController = _scrollKey.currentState?.innerController;
+
+    if (innerController == null || !innerController.hasClients) return;
+
+    final thresholdReached = innerController.position.extentAfter < _endReachedThreshold;
+
+    if (thresholdReached) {
+      // Load more!
+    }
+  }
+
+  void _onPokemonPress(Pokemon pokemon) {
+
+    print("Selected pokemon");
+    print(pokemon);
+
+    // AppNavigator.push(Routes.pokemonInfo, pokemon);
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -69,30 +108,25 @@ class _PokemonGridState extends ConsumerState {
             ),
           ),
       ],
-      body: Center(
-        child: pokemons.when(
-        data: (data) => ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(
-                              title: Text(data[index].name),
-                            );
-                          },
-        ),
-        error: (e, s) =>
-        const Center(
-          child: Text('Uh oh. Something went wrong!'),
-        ),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      ),
-      ),
+      body:
+          pokemons.when(
+            data: (data) => _buildGrid(data),
+            error: (e, s) =>
+              const Center(
+                child: Text('Uh oh. Something went wrong!'),
+              ),
+            loading: () => _buildLoading()
+          ),
     );
   }
 
-/*
-  Widget _buildGrid() {
+  Widget _buildLoading() {
+    return const Center(
+      child: Image(image: AppImages.pikachuLoader),
+    );
+  }
+
+  Widget _buildGrid(List<Pokemon> pokemons) {
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -106,26 +140,25 @@ class _PokemonGridState extends ConsumerState {
               ),
               delegate: SliverChildBuilderDelegate(
                 (_, index) {
-                  PokemonCard(
-                      pokemon,
-                      onPress: () => _onPokemonPress(pokemon),
+                  var pokemon = pokemons[index];
+                  return PokemonCard(
+                    pokemon,
+                    onPress: () => _onPokemonPress(pokemon)
                   );
-                  });
                 },
-                childCount: numberOfPokemons,
+                childCount: pokemons.length,
               ),
-            );
-          }),
+            )
         ),
         SliverToBoxAdapter(
-          child: Container(
-              padding: const EdgeInsets.only(bottom: 28),
+            child: Container(
+              color: Colors.tealAccent,
               alignment: Alignment.center,
-              child: const Image(image: AppImages.pikachuLoader),
-          )
-        ),
+              height: 200,
+              child: const Text('This is Container'),
+            ),
+          ),
       ],
     );
   }
-  */
 }
