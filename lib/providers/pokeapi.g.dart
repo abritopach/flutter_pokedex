@@ -6,7 +6,7 @@ part of 'pokeapi.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPokemonsHash() => r'b464b0e0b3ddcb69dc6e8392897cb01aa062abc2';
+String _$getPokemonsHash() => r'48de974fef0b2c3651031c3e2cda0a0b74b45d46';
 
 /// This will create a provider named `getPokemonsProvider`
 /// which will cache the result of this function.
