@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/constants/colors.dart';
 import 'package:flutter_pokedex/constants/images.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon.dart';
+import 'package:flutter_pokedex/domain/entities/pokemon_types.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemon_image.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemon_type.dart';
 
@@ -25,11 +26,11 @@ class PokemonCard extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            color: AppColors.teal, // pokemon.color,
+            color: pokemon.types.first.type.name.color,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: AppColors.teal.withOpacity(0.4), // pokemon.color.withOpacity(0.4),
+                color:  pokemon.types.first.type.name.color,
                 blurRadius: 15,
                 offset: const Offset(0, 8),
               ),
@@ -38,7 +39,7 @@ class PokemonCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Material(
-              color: AppColors.teal, // pokemon.color,
+              color: pokemon.types.first.type.name.color,
               child: InkWell(
                 onTap: onPress,
                 splashColor: Colors.white10,
@@ -92,8 +93,7 @@ class PokemonCard extends StatelessWidget {
       top: 10,
       right: 14,
       child: Text(
-        // pokemon.number,
-        "Pokemon number",
+        pokemon.id.toString(),
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _CardContent extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Hero(
-              tag: pokemon.name,// pokemon.number + pokemon.name,
+              tag: pokemon.id.toString() + pokemon.name,
               child: Text(
                 pokemon.name,
                 style: TextStyle(
