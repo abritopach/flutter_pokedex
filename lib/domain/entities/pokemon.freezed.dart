@@ -26,7 +26,7 @@ mixin _$Pokemon {
   String get name => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
   double get weight => throw _privateConstructorUsedError;
-  List<PokemonTypes1> get types => throw _privateConstructorUsedError;
+  List<PokemonTypes> get types => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $PokemonCopyWith<$Res> {
       String name,
       int id,
       double weight,
-      List<PokemonTypes1> types});
+      List<PokemonTypes> types});
 }
 
 /// @nodoc
@@ -97,7 +97,7 @@ class _$PokemonCopyWithImpl<$Res, $Val extends Pokemon>
       types: null == types
           ? _value.types
           : types // ignore: cast_nullable_to_non_nullable
-              as List<PokemonTypes1>,
+              as List<PokemonTypes>,
     ) as $Val);
   }
 }
@@ -116,7 +116,7 @@ abstract class _$$PokemonImplCopyWith<$Res> implements $PokemonCopyWith<$Res> {
       String name,
       int id,
       double weight,
-      List<PokemonTypes1> types});
+      List<PokemonTypes> types});
 }
 
 /// @nodoc
@@ -166,7 +166,7 @@ class __$$PokemonImplCopyWithImpl<$Res>
       types: null == types
           ? _value._types
           : types // ignore: cast_nullable_to_non_nullable
-              as List<PokemonTypes1>,
+              as List<PokemonTypes>,
     ));
   }
 }
@@ -181,7 +181,7 @@ class _$PokemonImpl implements _Pokemon {
       required this.name,
       required this.id,
       required this.weight,
-      required final List<PokemonTypes1> types})
+      required final List<PokemonTypes> types})
       : _types = types;
 
   factory _$PokemonImpl.fromJson(Map<String, dynamic> json) =>
@@ -199,9 +199,9 @@ class _$PokemonImpl implements _Pokemon {
   final int id;
   @override
   final double weight;
-  final List<PokemonTypes1> _types;
+  final List<PokemonTypes> _types;
   @override
-  List<PokemonTypes1> get types {
+  List<PokemonTypes> get types {
     if (_types is EqualUnmodifiableListView) return _types;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_types);
@@ -263,7 +263,7 @@ abstract class _Pokemon implements Pokemon {
       required final String name,
       required final int id,
       required final double weight,
-      required final List<PokemonTypes1> types}) = _$PokemonImpl;
+      required final List<PokemonTypes> types}) = _$PokemonImpl;
 
   factory _Pokemon.fromJson(Map<String, dynamic> json) = _$PokemonImpl.fromJson;
 
@@ -280,7 +280,7 @@ abstract class _Pokemon implements Pokemon {
   @override
   double get weight;
   @override
-  List<PokemonTypes1> get types;
+  List<PokemonTypes> get types;
   @override
   @JsonKey(ignore: true)
   _$$PokemonImplCopyWith<_$PokemonImpl> get copyWith =>

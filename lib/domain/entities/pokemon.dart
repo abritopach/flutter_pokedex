@@ -1,9 +1,4 @@
-
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon_types.dart';
-import 'package:flutter_pokedex/domain/entities/pokemon_types1.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pokemon.freezed.dart';
@@ -21,7 +16,7 @@ class Pokemon with _$Pokemon {
     required String name,
     required int id,
     required double weight,
-    required List<PokemonTypes1> types
+    required List<PokemonTypes> types
   }) = _Pokemon;
 
   /// Convert a JSON object into an [Activity] instance.

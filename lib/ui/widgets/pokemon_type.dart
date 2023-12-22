@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon_types.dart';
+import 'package:flutter_pokedex/domain/entities/pokemon_species.dart';
 class PokemonType extends StatelessWidget {
   const PokemonType(
     this.type, {
@@ -9,7 +10,7 @@ class PokemonType extends StatelessWidget {
     this.extra = '',
   }) : super(key: key);
 
-  final PokemonTypes type;
+  final PokemonSpecies type;
   final String extra;
   final bool large;
   final bool colored;
@@ -32,7 +33,7 @@ class PokemonType extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              type.value,
+              type.name.name.toString(),
               textScaleFactor: 1,
               style: TextStyle(
                   fontSize: large ? 12 : 8,

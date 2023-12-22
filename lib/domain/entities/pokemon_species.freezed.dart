@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'species.dart';
+part of 'pokemon_species.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,32 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Species _$SpeciesFromJson(Map<String, dynamic> json) {
-  return _Species.fromJson(json);
+PokemonSpecies _$PokemonSpeciesFromJson(Map<String, dynamic> json) {
+  return _PokemonSpecies.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Species {
-  PokemonTypes get name => throw _privateConstructorUsedError;
+mixin _$PokemonSpecies {
+  SpecieTypes get name => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SpeciesCopyWith<Species> get copyWith => throw _privateConstructorUsedError;
+  $PokemonSpeciesCopyWith<PokemonSpecies> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SpeciesCopyWith<$Res> {
-  factory $SpeciesCopyWith(Species value, $Res Function(Species) then) =
-      _$SpeciesCopyWithImpl<$Res, Species>;
+abstract class $PokemonSpeciesCopyWith<$Res> {
+  factory $PokemonSpeciesCopyWith(
+          PokemonSpecies value, $Res Function(PokemonSpecies) then) =
+      _$PokemonSpeciesCopyWithImpl<$Res, PokemonSpecies>;
   @useResult
-  $Res call({PokemonTypes name, String url});
+  $Res call({SpecieTypes name, String url});
 }
 
 /// @nodoc
-class _$SpeciesCopyWithImpl<$Res, $Val extends Species>
-    implements $SpeciesCopyWith<$Res> {
-  _$SpeciesCopyWithImpl(this._value, this._then);
+class _$PokemonSpeciesCopyWithImpl<$Res, $Val extends PokemonSpecies>
+    implements $PokemonSpeciesCopyWith<$Res> {
+  _$PokemonSpeciesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -56,7 +58,7 @@ class _$SpeciesCopyWithImpl<$Res, $Val extends Species>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as PokemonTypes,
+              as SpecieTypes,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -66,21 +68,22 @@ class _$SpeciesCopyWithImpl<$Res, $Val extends Species>
 }
 
 /// @nodoc
-abstract class _$$SpeciesImplCopyWith<$Res> implements $SpeciesCopyWith<$Res> {
-  factory _$$SpeciesImplCopyWith(
-          _$SpeciesImpl value, $Res Function(_$SpeciesImpl) then) =
-      __$$SpeciesImplCopyWithImpl<$Res>;
+abstract class _$$PokemonSpeciesImplCopyWith<$Res>
+    implements $PokemonSpeciesCopyWith<$Res> {
+  factory _$$PokemonSpeciesImplCopyWith(_$PokemonSpeciesImpl value,
+          $Res Function(_$PokemonSpeciesImpl) then) =
+      __$$PokemonSpeciesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PokemonTypes name, String url});
+  $Res call({SpecieTypes name, String url});
 }
 
 /// @nodoc
-class __$$SpeciesImplCopyWithImpl<$Res>
-    extends _$SpeciesCopyWithImpl<$Res, _$SpeciesImpl>
-    implements _$$SpeciesImplCopyWith<$Res> {
-  __$$SpeciesImplCopyWithImpl(
-      _$SpeciesImpl _value, $Res Function(_$SpeciesImpl) _then)
+class __$$PokemonSpeciesImplCopyWithImpl<$Res>
+    extends _$PokemonSpeciesCopyWithImpl<$Res, _$PokemonSpeciesImpl>
+    implements _$$PokemonSpeciesImplCopyWith<$Res> {
+  __$$PokemonSpeciesImplCopyWithImpl(
+      _$PokemonSpeciesImpl _value, $Res Function(_$PokemonSpeciesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -89,11 +92,11 @@ class __$$SpeciesImplCopyWithImpl<$Res>
     Object? name = null,
     Object? url = null,
   }) {
-    return _then(_$SpeciesImpl(
+    return _then(_$PokemonSpeciesImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as PokemonTypes,
+              as SpecieTypes,
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -104,27 +107,27 @@ class __$$SpeciesImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SpeciesImpl implements _Species {
-  _$SpeciesImpl({required this.name, required this.url});
+class _$PokemonSpeciesImpl implements _PokemonSpecies {
+  _$PokemonSpeciesImpl({required this.name, required this.url});
 
-  factory _$SpeciesImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SpeciesImplFromJson(json);
+  factory _$PokemonSpeciesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PokemonSpeciesImplFromJson(json);
 
   @override
-  final PokemonTypes name;
+  final SpecieTypes name;
   @override
   final String url;
 
   @override
   String toString() {
-    return 'Species(name: $name, url: $url)';
+    return 'PokemonSpecies(name: $name, url: $url)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SpeciesImpl &&
+            other is _$PokemonSpeciesImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url));
   }
@@ -136,30 +139,32 @@ class _$SpeciesImpl implements _Species {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SpeciesImplCopyWith<_$SpeciesImpl> get copyWith =>
-      __$$SpeciesImplCopyWithImpl<_$SpeciesImpl>(this, _$identity);
+  _$$PokemonSpeciesImplCopyWith<_$PokemonSpeciesImpl> get copyWith =>
+      __$$PokemonSpeciesImplCopyWithImpl<_$PokemonSpeciesImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SpeciesImplToJson(
+    return _$$PokemonSpeciesImplToJson(
       this,
     );
   }
 }
 
-abstract class _Species implements Species {
-  factory _Species(
-      {required final PokemonTypes name,
-      required final String url}) = _$SpeciesImpl;
+abstract class _PokemonSpecies implements PokemonSpecies {
+  factory _PokemonSpecies(
+      {required final SpecieTypes name,
+      required final String url}) = _$PokemonSpeciesImpl;
 
-  factory _Species.fromJson(Map<String, dynamic> json) = _$SpeciesImpl.fromJson;
+  factory _PokemonSpecies.fromJson(Map<String, dynamic> json) =
+      _$PokemonSpeciesImpl.fromJson;
 
   @override
-  PokemonTypes get name;
+  SpecieTypes get name;
   @override
   String get url;
   @override
   @JsonKey(ignore: true)
-  _$$SpeciesImplCopyWith<_$SpeciesImpl> get copyWith =>
+  _$$PokemonSpeciesImplCopyWith<_$PokemonSpeciesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
