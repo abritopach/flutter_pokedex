@@ -3,6 +3,7 @@ import 'package:flutter_pokedex/constants/colors.dart';
 import 'package:flutter_pokedex/constants/images.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon_types.dart';
+import 'package:flutter_pokedex/domain/entities/pokemon_species.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemon_image.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemon_type.dart';
 
@@ -26,11 +27,11 @@ class PokemonCard extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            color: pokemon.types.first.type.name.color,
+            color: pokemon.types.first.type.color,
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color:  pokemon.types.first.type.name.color,
+                color:  pokemon.types.first.type.color,
                 blurRadius: 15,
                 offset: const Offset(0, 8),
               ),
@@ -39,7 +40,7 @@ class PokemonCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Material(
-              color: pokemon.types.first.type.name.color,
+              color: pokemon.types.first.type.color,
               child: InkWell(
                 onTap: onPress,
                 splashColor: Colors.white10,
@@ -93,7 +94,7 @@ class PokemonCard extends StatelessWidget {
       top: 10,
       right: 14,
       child: Text(
-        pokemon.id.toString(),
+        '#${pokemon.id.toString().padLeft(3, '0')}',
         style: const TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.bold,
@@ -132,24 +133,22 @@ class _CardContent extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // ..._buildTypes(context),
+            ..._buildTypes(context),
           ],
         ),
       ),
     );
   }
 
-/*
   List<Widget> _buildTypes(BuildContext context) {
     return pokemon.types
         .take(2)
         .map(
           (type) => Padding(
             padding: const EdgeInsets.only(bottom: 6),
-            child: PokemonType(type),
+            child: PokemonType(type.type),
           ),
         )
         .toList();
   }
-  */
 }
