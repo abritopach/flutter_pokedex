@@ -3,16 +3,29 @@ import 'package:flutter_pokedex/domain/entities/pokemon.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+final pokemonRepositoryProvider = Provider<PokemonRepository>((ref) {
+  return PokemonRepositoryImpl(client: http.Client());
+});
 
-// Necessary for code-generation to work
-part 'pokeapi.g.dart';
+final fetchPokemonsProvider = FutureProvider((ref) {
+  final pokemonRepository = ref.watch(pokemonRepositoryProvider);
+  return pokemonRepository.getPokemons();
+});
 
-/// This will create a provider named `getPokemonsProvider`
-/// which will cache the result of this function.
-@riverpod
-Future<List<Pokemon>> getPokemons(GetPokemonsRef ref, int limit, int offset) async {
+abstract class PokemonRepository {
+  Future<List<Pokemon>> getPokemons();
+}
 
-  List<Pokemon> pokemons = [];
+class PokemonRepositoryImpl extends PokemonRepository {
+
+  PokemonRepositoryImpl({required this.client});
+
+  // Client for making calls to the API.
+  final http.Client client;
+
+  @override
+  Future<List<Pokemon>> getPokemons() async {
+    List<Pokemon> pokemons = [];
 
   // Using package:http, we fetch pokemons from the API.
   final response = await http.get(
@@ -27,7 +40,7 @@ Future<List<Pokemon>> getPokemons(GetPokemonsRef ref, int limit, int offset) asy
     )
   );
   */
-  );
+    );
   if (response.statusCode == 200) {
       var pokemonsJson = jsonDecode(response.body)["results"] as List<dynamic>;
       await Future.forEach((pokemonsJson), (pokemon) async {
@@ -39,4 +52,6 @@ Future<List<Pokemon>> getPokemons(GetPokemonsRef ref, int limit, int offset) asy
       });
   }
   return pokemons;
+  }
 }
+
