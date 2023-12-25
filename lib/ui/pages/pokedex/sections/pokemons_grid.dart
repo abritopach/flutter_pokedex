@@ -61,7 +61,7 @@ class _PokemonGridState extends ConsumerState {
   @override
   Widget build(BuildContext context) {
 
-    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider);
+    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider(MyParameter(offset: 0, limit: 20)));
 
     return NestedScrollView(
       key: _scrollKey,
