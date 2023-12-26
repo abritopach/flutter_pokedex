@@ -55,14 +55,13 @@ class _PokemonGridState extends ConsumerState {
     print("Selected pokemon");
     print(pokemon);
 
-    // AppNavigator.push(Routes.pokemonInfo, pokemon);
+    AppNavigator.push(Routes.pokemonInfo, pokemon);
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider);
-
+    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 0, limit: 20)));
     return NestedScrollView(
       key: _scrollKey,
       headerSliverBuilder: (_, __) => [
@@ -151,13 +150,12 @@ class _PokemonGridState extends ConsumerState {
             )
         ),
         SliverToBoxAdapter(
-            child: Container(
-              color: Colors.tealAccent,
+          child: Container(
+              padding: const EdgeInsets.only(bottom: 28),
               alignment: Alignment.center,
-              height: 200,
-              child: const Text('This is Container'),
-            ),
-          ),
+              child: const Image(image: AppImages.pikachuLoader),
+            )
+        ),
       ],
     );
   }
