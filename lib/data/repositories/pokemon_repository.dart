@@ -11,16 +11,16 @@ final pokemonRepositoryProvider = Provider<PokemonRepository>((ref) {
 });
 
 @freezed
-abstract class MyParameter with _$MyParameter {
-  factory MyParameter({
+abstract class FetchPokemonsParameters with _$FetchPokemonsParameters {
+  factory FetchPokemonsParameters({
     required int offset,
     required int limit,
-  }) = _MyParameter;
+  }) = _FetchPokemonsParameters;
 }
 
-final fetchPokemonsProvider = FutureProvider.family<List<Pokemon>, MyParameter>((ref, myParameter) {
+final fetchPokemonsProvider = FutureProvider.family<List<Pokemon>, FetchPokemonsParameters>((ref, FetchPokemonsParameters) {
   final pokemonRepository = ref.watch(pokemonRepositoryProvider);
-  return pokemonRepository.getPokemons(myParameter.offset, myParameter.limit);
+  return pokemonRepository.getPokemons(FetchPokemonsParameters.offset, FetchPokemonsParameters.limit);
 });
 
 abstract class PokemonRepository {
