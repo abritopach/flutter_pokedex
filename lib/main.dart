@@ -1,12 +1,18 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/logs/my_observer.dart';
 import 'package:flutter_pokedex/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
   runApp(
-    const ProviderScope(child: PokedexApp())
+    ProviderScope(
+      observers: [
+        MyObserver(),
+      ],
+      child: PokedexApp()
+    )
     );
 }
 

@@ -14,7 +14,6 @@ class _PokemonGridState extends ConsumerState {
   final GlobalKey<NestedScrollViewState> _scrollKey = GlobalKey();
 
   static const TextStyle _textStyle = TextStyle(
-    // color: Colors.black,
     fontWeight: FontWeight.bold,
     fontSize: kToolbarHeight / 3,
     height: 1,
@@ -50,18 +49,11 @@ class _PokemonGridState extends ConsumerState {
     }
   }
 
-  void _onPokemonPress(Pokemon pokemon) {
-
-    print("Selected pokemon");
-    print(pokemon);
-
-    AppNavigator.push(Routes.pokemonInfo, pokemon);
-  }
-
   @override
   Widget build(BuildContext context) {
 
-    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 0, limit: 20)));
+    final AsyncValue<int> pokemonsCounter = ref.watch(fetchPokemonsCountProvider);
+
     return NestedScrollView(
       key: _scrollKey,
       headerSliverBuilder: (_, __) => [
@@ -108,7 +100,7 @@ class _PokemonGridState extends ConsumerState {
           ),
       ],
       body:
-          pokemons.when(
+          pokemonsCounter.when(
             loading: () => _buildLoading(),
             error: (e, trace) =>
               const Center(
@@ -116,16 +108,21 @@ class _PokemonGridState extends ConsumerState {
               ),
             data: (data) => _buildGrid(data),
           ),
+          /*
+          pokemonsCounter.when(
+            loading: () => _buildLoading(),
+            error: (e, trace) =>
+              const Center(
+                child: Text('Uh oh. Something went wrong!'),
+            ),
+            data: (data) => _buildListView(data)
+          )
+          */
     );
   }
 
-  Widget _buildLoading() {
-    return const Center(
-      child: Image(image: AppImages.pikachuLoader),
-    );
-  }
+  Widget _buildGrid(int pokemonsCounter) {
 
-  Widget _buildGrid(List<Pokemon> pokemons) {
     return CustomScrollView(
       slivers: [
         SliverPadding(
@@ -139,24 +136,109 @@ class _PokemonGridState extends ConsumerState {
               ),
               delegate: SliverChildBuilderDelegate(
                 (_, index) {
-                  var pokemon = pokemons[index];
-                  return PokemonCard(
-                    pokemon,
-                    onPress: () => _onPokemonPress(pokemon)
+                  final AsyncValue<Pokemon> currentPokemonFromIndex = ref
+                  .watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
+                  .whenData((pokemons) => pokemons[index % 20]);
+
+                  return ProviderScope(
+                    overrides: [
+                      // Override the Unimplemented provider
+                      currentPokemonProvider.overrideWithValue(currentPokemonFromIndex)
+                    ],
+                    child: const SilverGridItem(),
                   );
                 },
-                childCount: pokemons.length,
+                childCount: pokemonsCounter,
               ),
             )
         ),
-        SliverToBoxAdapter(
-          child: Container(
-              padding: const EdgeInsets.only(bottom: 28),
-              alignment: Alignment.center,
-              child: const Image(image: AppImages.pikachuLoader),
-            )
-        ),
       ],
+    );
+  }
+
+}
+
+/*
+Widget _buildListView(int pokemonsCounter) {
+    return ListView.builder(
+          itemCount: pokemonsCounter,
+          itemBuilder: (context, index) {
+            final AsyncValue<Pokemon> currentPokemonFromIndex = ref
+                  .watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
+                  .whenData((pokemons) => pokemons[index % 20]);
+
+            return ProviderScope(
+              overrides: [
+                // Override the Unimplemented provider
+                currentPokemonProvider.overrideWithValue(currentPokemonFromIndex)
+              ],
+              child: _buildListItem(),
+            );
+          },
+        );
+  }
+
+class _buildListItem extends ConsumerWidget {
+
+  const _buildListItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final AsyncValue<Pokemon> pokemonAsync = ref.watch(currentPokemonProvider);
+
+
+    return Container(
+      child: pokemonAsync.when(
+                      loading: () => const Center(
+                        child: Image(image: AppImages.pikachuLoader),
+                      ),
+                      error: (e, trace) =>
+                        const Center(
+                          child: Text('Uh oh. Something went wrong!'),
+                      ),
+                      data: (Pokemon pokemon) =>  Container(
+                        padding: const EdgeInsets.only(bottom: 28),
+                        alignment: Alignment.center,
+                        child: Text(pokemon.name),
+                      )
+                    ),
+    );
+  }
+}
+*/
+
+Widget _buildLoading() {
+    return const Center(
+      child: Image(image: AppImages.pikachuLoader),
+    );
+}
+
+class SilverGridItem extends ConsumerWidget {
+
+  const SilverGridItem({Key? key}) : super(key: key);
+
+  void _onPokemonPress(Pokemon pokemon) {
+    AppNavigator.push(Routes.pokemonInfo, pokemon);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+  final AsyncValue<Pokemon> pokemonAsync = ref.watch(currentPokemonProvider);
+
+  return Container(
+      child: pokemonAsync.when(
+        loading: () => _buildLoading(),
+        error: (e, trace) =>
+          const Center(
+            child: Text('Uh oh. Something went wrong!'),
+          ),
+        data: (Pokemon pokemon) =>  PokemonCard(
+          pokemon,
+          onPress: () => _onPokemonPress(pokemon)
+        )
+      )
     );
   }
 }
