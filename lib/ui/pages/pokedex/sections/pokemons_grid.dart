@@ -62,7 +62,8 @@ class _PokemonGridState extends ConsumerState {
   Widget build(BuildContext context) {
 
     final AsyncValue<int> pokemonsCounter = ref.watch(fetchPokemonsCountProvider);
-    final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 0, limit: 20)));
+    // final AsyncValue<List<Pokemon>> pokemons = ref.watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 0, limit: 20)));
+
 
     return NestedScrollView(
       key: _scrollKey,
@@ -110,6 +111,7 @@ class _PokemonGridState extends ConsumerState {
           ),
       ],
       body:
+          /*
           pokemons.when(
             loading: () => _buildLoading(),
             error: (e, trace) =>
@@ -118,6 +120,15 @@ class _PokemonGridState extends ConsumerState {
               ),
             data: (data) => _buildGrid(data),
           ),
+          */
+          pokemonsCounter.when(
+            loading: () => _buildLoading(),
+            error: (e, trace) =>
+              const Center(
+                child: Text('Uh oh. Something went wrong!'),
+            ),
+            data: (data) => _buildListView(data)
+          )
     );
   }
 
@@ -127,6 +138,7 @@ class _PokemonGridState extends ConsumerState {
     );
   }
 
+/*
   Widget _buildGrid(List<Pokemon> pokemons) {
     return CustomScrollView(
       slivers: [
@@ -159,6 +171,112 @@ class _PokemonGridState extends ConsumerState {
             )
         ),
       ],
+    );
+  }
+  */
+
+  Widget _buildGrid(int pokemonsCounter) {
+
+    final AsyncValue<PokemonResult> pokemonAsync = ref.watch(currentPokemonProvider);
+
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.all(28),
+          sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.4,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (_, index) {
+                  final AsyncValue<PokemonResult> currentPokemonFromIndex = ref
+                  .watch(fetchPokemonsProvider2(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
+                  .whenData((pageData) => pageData.results[index % 20]);
+
+                  return ProviderScope(
+                    overrides: [
+                      // Override the Unimplemented provider
+                      currentPokemonProvider.overrideWithValue(currentPokemonFromIndex)
+                    ],
+                    child: pokemonAsync.when(
+                      loading: () => _buildLoading(),
+                      error: (e, trace) =>
+                        const Center(
+                          child: Text('Uh oh. Something went wrong!'),
+                      ),
+                      data: (PokemonResult pokemon) =>  Container(
+                        padding: const EdgeInsets.only(bottom: 28),
+                        alignment: Alignment.center,
+                        child: Text(pokemon.name),
+                      )
+                    ),
+                  );
+                },
+                childCount: pokemonsCounter,
+              ),
+            )
+        ),
+      ],
+    );
+  }
+
+  Widget _buildListView(int pokemonsCounter) {
+
+    print(pokemonsCounter);
+    print('_buildListView');
+
+    return ListView.builder(
+          itemCount: pokemonsCounter,
+          itemBuilder: (context, index) {
+
+            print('ListView.builder');
+            print(index);
+
+            final AsyncValue<PokemonResult> currentPokemonFromIndex = ref
+                  .watch(fetchPokemonsProvider2(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
+                  .whenData((pageData) => pageData.results[index % 20]);
+
+            return ProviderScope(
+              overrides: [
+                // Override the Unimplemented provider
+                currentPokemonProvider.overrideWithValue(currentPokemonFromIndex)
+              ],
+              child: _buildListItem(),
+            );
+          },
+        );
+  }
+
+}
+
+class _buildListItem extends ConsumerWidget {
+
+  const _buildListItem({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final AsyncValue<PokemonResult> pokemonAsync = ref.watch(currentPokemonProvider);
+
+
+    return Container(
+      child: pokemonAsync.when(
+                      loading: () => const Center(
+                        child: Image(image: AppImages.pikachuLoader),
+                      ),
+                      error: (e, trace) =>
+                        const Center(
+                          child: Text('Uh oh. Something went wrong!'),
+                      ),
+                      data: (PokemonResult pokemon) =>  Container(
+                        padding: const EdgeInsets.only(bottom: 28),
+                        alignment: Alignment.center,
+                        child: Text(pokemon.name),
+                      )
+                    ),
     );
   }
 }

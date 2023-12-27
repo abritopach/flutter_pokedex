@@ -8,8 +8,8 @@ part 'paginated_response.g.dart';
 class PaginatedResponse with _$PaginatedResponse {
   factory PaginatedResponse({
     required int count,
-    required String next,
-    required String previous,
+    required String? next,
+    required String? previous,
     required List<PokemonResult> results
   }) = _PaginatedResponse;
 

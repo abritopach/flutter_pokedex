@@ -21,8 +21,8 @@ PaginatedResponse _$PaginatedResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PaginatedResponse {
   int get count => throw _privateConstructorUsedError;
-  String get next => throw _privateConstructorUsedError;
-  String get previous => throw _privateConstructorUsedError;
+  String? get next => throw _privateConstructorUsedError;
+  String? get previous => throw _privateConstructorUsedError;
   List<PokemonResult> get results => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $PaginatedResponseCopyWith<$Res> {
       _$PaginatedResponseCopyWithImpl<$Res, PaginatedResponse>;
   @useResult
   $Res call(
-      {int count, String next, String previous, List<PokemonResult> results});
+      {int count, String? next, String? previous, List<PokemonResult> results});
 }
 
 /// @nodoc
@@ -55,8 +55,8 @@ class _$PaginatedResponseCopyWithImpl<$Res, $Val extends PaginatedResponse>
   @override
   $Res call({
     Object? count = null,
-    Object? next = null,
-    Object? previous = null,
+    Object? next = freezed,
+    Object? previous = freezed,
     Object? results = null,
   }) {
     return _then(_value.copyWith(
@@ -64,14 +64,14 @@ class _$PaginatedResponseCopyWithImpl<$Res, $Val extends PaginatedResponse>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: null == next
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      previous: null == previous
+              as String?,
+      previous: freezed == previous
           ? _value.previous
           : previous // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       results: null == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
@@ -89,7 +89,7 @@ abstract class _$$PaginatedResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int count, String next, String previous, List<PokemonResult> results});
+      {int count, String? next, String? previous, List<PokemonResult> results});
 }
 
 /// @nodoc
@@ -104,8 +104,8 @@ class __$$PaginatedResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? count = null,
-    Object? next = null,
-    Object? previous = null,
+    Object? next = freezed,
+    Object? previous = freezed,
     Object? results = null,
   }) {
     return _then(_$PaginatedResponseImpl(
@@ -113,14 +113,14 @@ class __$$PaginatedResponseImplCopyWithImpl<$Res>
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
               as int,
-      next: null == next
+      next: freezed == next
           ? _value.next
           : next // ignore: cast_nullable_to_non_nullable
-              as String,
-      previous: null == previous
+              as String?,
+      previous: freezed == previous
           ? _value.previous
           : previous // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
@@ -145,9 +145,9 @@ class _$PaginatedResponseImpl implements _PaginatedResponse {
   @override
   final int count;
   @override
-  final String next;
+  final String? next;
   @override
-  final String previous;
+  final String? previous;
   final List<PokemonResult> _results;
   @override
   List<PokemonResult> get results {
@@ -196,8 +196,8 @@ class _$PaginatedResponseImpl implements _PaginatedResponse {
 abstract class _PaginatedResponse implements PaginatedResponse {
   factory _PaginatedResponse(
       {required final int count,
-      required final String next,
-      required final String previous,
+      required final String? next,
+      required final String? previous,
       required final List<PokemonResult> results}) = _$PaginatedResponseImpl;
 
   factory _PaginatedResponse.fromJson(Map<String, dynamic> json) =
@@ -206,9 +206,9 @@ abstract class _PaginatedResponse implements PaginatedResponse {
   @override
   int get count;
   @override
-  String get next;
+  String? get next;
   @override
-  String get previous;
+  String? get previous;
   @override
   List<PokemonResult> get results;
   @override

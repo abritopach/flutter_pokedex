@@ -10,8 +10,8 @@ _$PaginatedResponseImpl _$$PaginatedResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$PaginatedResponseImpl(
       count: json['count'] as int,
-      next: json['next'] as String,
-      previous: json['previous'] as String,
+      next: json['next'] as String?,
+      previous: json['previous'] as String?,
       results: (json['results'] as List<dynamic>)
           .map((e) => PokemonResult.fromJson(e as Map<String, dynamic>))
           .toList(),
