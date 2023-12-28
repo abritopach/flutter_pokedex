@@ -40,6 +40,15 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
     }
   }
 
+
+  void _showGenerationModal() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const GenerationModal(),
+    );
+  }
+
   void onPress([Function? callback]) {
     _toggleFabMenu();
 
@@ -74,7 +83,7 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
             FabItemData(
               'All Gen',
               Icons.flash_on,
-              onPress: () => onPress(),
+              onPress: () => onPress(_showGenerationModal),
             ),
             FabItemData(
               'Search',
