@@ -1,14 +1,34 @@
 import 'package:flutter_pokedex/data/repositories/pokemon_repository.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:flutter_pokedex/domain/entities/pokemon.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final PokedexControllerProvider = Provider((ref) {
-  final pokemonRepository = ref.watch(pokemonRepositoryProvider);
-  return PokedexController(ref: ref, pokemonRepositoryImpl: pokemonRepository);
+final pokedexControllerProvider =
+    StateNotifierProvider<PokedexController, List<Pokemon>>((ref) {
+  return PokedexController(ref);
 });
 
-class PokedexController {
-  final ProviderRef ref;
-  final PokemonRepository pokemonRepositoryImpl;
 
-  PokedexController({required this.ref, required this.pokemonRepositoryImpl});
+class PokedexController extends StateNotifier<List<Pokemon>> {
+  PokedexController(Ref ref)
+      : _pokemonRepository = ref.read(pokemonRepositoryProvider),
+        super([]);
+
+  final PokemonRepository _pokemonRepository;
+
+  Future<void> fetchPokemons() async {
+    final results = await _pokemonRepository.fetchPokemons(0, 20);
+    state = results;
+  }
+
+  void searchPokemons(String searchText) {
+    List<Pokemon> results = [];
+    if (searchText.isEmpty) {
+      results = state;
+    }
+    else {
+      results = state.where((element) => element.name.toLowerCase().contains(searchText.toLowerCase())).toList();
+    }
+    state = results;
+  }
+
 }

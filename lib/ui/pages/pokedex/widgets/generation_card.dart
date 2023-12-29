@@ -13,7 +13,8 @@ class GenerationCard extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       final height = constraints.maxHeight;
 
-      return Container(
+      return InkWell(
+    child: Container(
         decoration: BoxDecoration(
           color:Colors.white,
           borderRadius: BorderRadius.circular(15),
@@ -68,6 +69,11 @@ class GenerationCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      onTap: () {
+        print("Click event on Container");
+        print(generation.title);
+      }
       );
     });
   }
