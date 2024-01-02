@@ -40,6 +40,14 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
     }
   }
 
+  void _showSearchModal() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const SearchModal(),
+    );
+  }
+
 
   void _showGenerationModal() {
     showModalBottomSheet(
@@ -88,7 +96,7 @@ class _FabMenuState extends State<_FabMenu> with SingleTickerProviderStateMixin 
             FabItemData(
               'Search',
               Icons.search,
-              onPress: () => onPress(),
+              onPress: () => onPress(_showSearchModal),
             ),
           ],
         ),

@@ -46,6 +46,7 @@ class _PokemonGridState extends ConsumerState {
 
     if (thresholdReached) {
       // Load more!
+      ref.read(pokedexControllerProvider.notifier).fetchMore();
     }
   }
 
@@ -53,6 +54,11 @@ class _PokemonGridState extends ConsumerState {
   Widget build(BuildContext context) {
 
     final AsyncValue<int> pokemonsCounter = ref.watch(fetchPokemonsCountProvider);
+    final pokemons = ref.watch(pokedexControllerProvider);
+    final paginatorController = ref.watch(pokedexControllerProvider.notifier);
+    final hasMore = paginatorController.hasMore;
+    final pokemonsValue = pokemons.value ?? [];
+    final isFetchingMore = pokemons.isLoading & pokemonsValue.isNotEmpty;
 
     return NestedScrollView(
       key: _scrollKey,
@@ -100,6 +106,15 @@ class _PokemonGridState extends ConsumerState {
           ),
       ],
       body:
+        pokemons.when(
+          loading: () => _buildLoading(),
+            error: (e, trace) =>
+              const Center(
+                child: Text('Uh oh. Something went wrong!'),
+            ),
+            data: (data) => _buildGrid(data)
+        )
+          /*
           pokemonsCounter.when(
             loading: () => _buildLoading(),
             error: (e, trace) =>
@@ -108,7 +123,6 @@ class _PokemonGridState extends ConsumerState {
               ),
             data: (data) => _buildGrid(data),
           ),
-          /*
           pokemonsCounter.when(
             loading: () => _buildLoading(),
             error: (e, trace) =>
@@ -121,7 +135,7 @@ class _PokemonGridState extends ConsumerState {
     );
   }
 
-  Widget _buildGrid(int pokemonsCounter) {
+  Widget _buildGrid(List<Pokemon> pokemons) {
 
     return CustomScrollView(
       slivers: [
@@ -136,6 +150,8 @@ class _PokemonGridState extends ConsumerState {
               ),
               delegate: SliverChildBuilderDelegate(
                 (_, index) {
+
+                  /*
                   final AsyncValue<Pokemon> currentPokemonFromIndex = ref
                   .watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
                   .whenData((pokemons) => pokemons[index % 20]);
@@ -147,8 +163,14 @@ class _PokemonGridState extends ConsumerState {
                     ],
                     child: const SilverGridItem(),
                   );
+                  */
+
+                  final pokemon = pokemons[index];
+                  return PokemonCard(
+                      pokemon
+                  );
                 },
-                childCount: pokemonsCounter,
+                childCount: pokemons.length,
               ),
             )
         ),
@@ -158,11 +180,11 @@ class _PokemonGridState extends ConsumerState {
 
 }
 
-/*
-Widget _buildListView(int pokemonsCounter) {
+Widget _buildListView(List<Pokemon> pokemons) {
     return ListView.builder(
-          itemCount: pokemonsCounter,
+          itemCount: pokemons.length,
           itemBuilder: (context, index) {
+            /*
             final AsyncValue<Pokemon> currentPokemonFromIndex = ref
                   .watch(fetchPokemonsProvider(FetchPokemonsParameters(offset: 20 * (index ~/ 20), limit: 20)))
                   .whenData((pokemons) => pokemons[index % 20]);
@@ -174,6 +196,13 @@ Widget _buildListView(int pokemonsCounter) {
               ],
               child: _buildListItem(),
             );
+            */
+            final pokemon = pokemons[index];
+            return Container(
+                        padding: const EdgeInsets.only(bottom: 28),
+                        alignment: Alignment.center,
+                        child: Text(pokemon.name),
+                      );
           },
         );
   }
@@ -206,7 +235,6 @@ class _buildListItem extends ConsumerWidget {
     );
   }
 }
-*/
 
 Widget _buildLoading() {
     return const Center(
