@@ -1,6 +1,7 @@
 import 'package:flutter_pokedex/data/sources/remote/pokeapi/pokedex_api.dart';
 import 'package:flutter_pokedex/domain/entities/paginated_response.dart';
 import 'package:flutter_pokedex/domain/entities/pokemon.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
