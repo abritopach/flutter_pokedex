@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/constants/colors.dart';
 import 'package:flutter_pokedex/constants/images.dart';
 import 'package:flutter_pokedex/domain/entities/generation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_controller.dart';
 
-class GenerationCard extends StatelessWidget {
+class GenerationCard extends ConsumerWidget {
   const GenerationCard(this.generation, {super.key});
 
   final Generation generation;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(builder: (context, constraints) {
       final height = constraints.maxHeight;
 
@@ -73,6 +75,7 @@ class GenerationCard extends StatelessWidget {
       onTap: () {
         print("Click event on Container");
         print(generation.title);
+        ref.read(pokedexControllerProvider.notifier).filterPokemons(generation.offset, generation.limit);
       }
       );
     });
