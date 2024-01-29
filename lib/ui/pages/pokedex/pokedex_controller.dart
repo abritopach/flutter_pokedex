@@ -41,6 +41,18 @@ class PokedexController extends AsyncNotifier<List<Pokemon>> {
     state = newState;
   }
 
+    Future<List<Pokemon>> filterPokemons(int offset, int limit) async {
+    state = const AsyncLoading();
+    final newState = await AsyncValue.guard(() async {
+      final newPokemons = await fetchPokemons(offset, limit);
+      _pokemonsList = [];
+      _pokemonsList = [...newPokemons];
+      return _pokemonsList;
+    });
+    state = newState;
+    return newState.value ?? [];
+  }
+
   Future<void> searchPokemons(String searchText) async {
     var newState = await AsyncValue.guard(() async {
       if (searchText.isEmpty) {
