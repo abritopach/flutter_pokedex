@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_controller.dart';
-import 'package:flutter_pokedex/ui/pages/pokedex/pokedex_controller.dart';
 import 'package:flutter_pokedex/ui/widgets/modal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
