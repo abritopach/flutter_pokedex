@@ -49,4 +49,16 @@ const List<Generation> generations = [
     offset: 809,
     limit: 89
   ),
+  Generation(
+    title: 'Generation IX',
+    imagePath: 'assets/images/generation_9.png',
+    offset: 905,
+    limit: 121
+  ),
+  Generation(
+    title: 'All (I - IX)',
+    imagePath: 'assets/images/all_generations.png',
+    offset: 0,
+    limit: 25
+  ),
 ];
