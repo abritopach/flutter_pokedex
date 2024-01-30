@@ -73,8 +73,6 @@ class GenerationCard extends ConsumerWidget {
         ),
       ),
       onTap: () {
-        print("Click event on Container");
-        print(generation.title);
         ref.read(pokedexControllerProvider.notifier).filterPokemons(generation.offset, generation.limit);
       }
       );

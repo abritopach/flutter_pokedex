@@ -19,6 +19,8 @@ class AppImages {
   static const generation6 = _Image('generation_6.png');
   static const generation7 = _Image('generation_7.png');
   static const generation8 = _Image('generation_8.png');
+  static const generation9 = _Image('generation_9.png');
+
 
   static Future precacheAssets(BuildContext context) async {
     await precacheImage(pikachuLoader, context);
@@ -33,5 +35,6 @@ class AppImages {
     await precacheImage(generation6, context);
     await precacheImage(generation7, context);
     await precacheImage(generation8, context);
+    await precacheImage(generation9, context);
   }
 }
